@@ -15,3 +15,5 @@ This will create ```Particle.so```
 ## Testing
 
     root -l -b -q test.C+
+
+Please note that the ```+``` is a must!

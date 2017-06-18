@@ -1,5 +1,32 @@
-all:
-	g++ -g -O2 -Wall -fPIC -Wshadow -Woverloaded-virtual -pthread -std=c++11 -Wno-deprecated-declarations -m64 -I/cvmfs/cms.cern.ch/slc6_amd64_gcc530/cms/cmssw/CMSSW_8_0_6/external/slc6_amd64_gcc530/bin/../../../../../../lcg/root/6.06.00-ikhhed3/include -o Particle.so -shared Particle.cc
+include Makefile.arch
 
+#
+# stuff to make
+#
+SOURCES=$(wildcard *.cc)
+OBJECTS=$(SOURCES:.cc=.o)
+LIB=PhysicsTools.so
+
+#
+# how to make it
+#
+
+$(LIB): $(OBJECTS)
+	$(LD) $(LDFLAGS) $(SOFLAGS) $(OBJECTS) $(ROOTLIBS) -lTMVA -lEG -lGenVector -lXMLIO -lMLP -lTreePlayer -o $@
+
+%.o:	%.cc
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+#
+# target to build
+# likelihood id library
+#
+
+all: $(LIB)
 clean:
-	rm -f Particle.so test_C.* test_C_*
+	rm -f *.o \
+	rm -f *.d \
+	rm -f *.so \
+
+testclean:
+	rm -f test_C.* test_C_*

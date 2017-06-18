@@ -5,7 +5,7 @@ void test()
 {
 
   // Load the library for testing
-  gSystem->Load("Particle.so");
+  gSystem->Load("PhysicsTools.so");
 
   // Create an instance for testing
   Particle particle;
